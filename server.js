@@ -1,22 +1,23 @@
 // importar el modelo http
+const { error } = require('console');
 const http = require('http');
 
-const fs = require('fs');
+const fs = require('fs').promises;
 //definir el puerto en el que se instancia el servidor
 const port = 3000;
 
 
 const servidor = http.createServer((req, res) => {
-    fs.readFile('./index.html', (err, data) => {
-        if (err) {
-            res.statusCode = 500;
-            res.end('Error al cargar la pagina');
-            return;
-        }
-        res.statusCode = 200;
-        res.setHeader('Content-Type', 'text/html');
-        res.end(data);
-    });
+    fs.readFile('./index.html', 'utf-8')
+    .then (
+        data =>
+        {console.log('Ejecucion con exito', data)}
+    )
+    .catch (
+        err =>
+        {console.log('Hubo un error en la ejecucion', err)}
+        
+    )
 });
 
 
